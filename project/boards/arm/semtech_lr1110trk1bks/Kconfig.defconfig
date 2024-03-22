@@ -1,0 +1,17 @@
+# LR1110TRK1BKS board configuration
+
+if BOARD_SEMTECH_LR1110TRK1BKS
+
+config BOARD
+	default "semtech_lr1110trk1bks"
+
+choice BT_HCI_BUS_TYPE
+	default BT_STM32_IPM
+	depends on BT
+endchoice
+
+# LPTIM clocked by LSE, force tick freq to 4096 for tick accuracy
+config SYS_CLOCK_TICKS_PER_SEC
+	default 4096 if STM32_LPTIM_TIMER
+
+endif # BOARD_SEMTECH_LR1110TRK1BKS

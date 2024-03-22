@@ -1,0 +1,19 @@
+identifier: semtech_lr1110trk1bks
+name: Semtech LR1110TRK1BKS
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+ram: 192
+flash: 808
+supported:
+  - gpio
+  - i2c
+  - counter
+  - dma
+  - spi
+  - watchdog
+  - usb_device
+  - nvs

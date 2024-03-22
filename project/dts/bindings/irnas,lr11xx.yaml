@@ -1,0 +1,180 @@
+# Copyright (c) 2021, IRNAS d.o.o.
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Semtech LR11XX LoRa radio module
+
+compatible: "irnas,lr11xx"
+
+include: spi-device.yaml
+
+properties:
+  pwr-en-gpios:
+    type: phandle-array
+    required: false
+    description: |
+      GPIO responsible for the power of lr11xx.
+
+  reset-gpios:
+    type: phandle-array
+    required: true
+    description: |
+      GPIO connected to the NRESET pin of lr11xx.
+
+  gps-lna-en-gpios:
+    type: phandle-array
+    required: false
+    description: |
+      GPIO responsible for the power of the GPS LNA used by lr11xx.
+
+  busy-gpios:
+    type: phandle-array
+    required: true
+    description: |
+      GPIO connected to the BUSY/DIO0 pin of lr11xx.
+
+      The BUSY line is high when lr11xx is in sleep mode,
+      and ready to accept commands.
+      The BUSY line is low when lr11xx is processing a command.
+
+  event-gpios:
+    type: phandle-array
+    required: true
+    description: |
+      GPIO connected to the LR_EVENT/DIO9 signal on lr11xx.
+      High EVENT line indicates an event must be read from lr11xx.
+      The EVENT line stays high until all events are cleared.
+
+  lf-tx-path:
+    type: int
+    required: true
+    enum:
+      - 0
+      - 1
+      - 2
+    description: |
+      Configuration of the low power TX path placement. Selects which RF paths
+      are placed and thus which paths lr11xx will use.
+      Use the LR11XX_TX_PATH_* macros in lr11xx_bindings_def.h when setting
+      this property.
+
+  tcxo-supply:
+    type: int
+    required: true
+    description: |
+      Supply voltage of the TCXO used by lr11xx. This is the voltage that
+      lr11xx will output on the VTCXO pin. Use the LR11XX_TCXO_SUPPLY_*
+      macros in lr11xx_bindings_def.h when setting this property.
+
+  tcxo-wakeup-time:
+    type: int
+    required: true
+    description: |
+      In milliseconds, the wakeup (or stabilization) time of the TCXO used by lr11xx.
+
+  lf-clk:
+    type: int
+    required: true
+    enum:
+      - 0
+      - 1
+      - 2
+    description: |
+      Low frequency clock source for lr11xx. Use the LR11XX_LFCLK_* macros
+      in lr11xx_bindings_def.h when setting this property.
+
+  reg-mode:
+    type: int
+    required: true
+    enum:
+      - 0
+      - 1
+    description: |
+      Configuration of the lr11xx regulator mode. Use the LR11XX_REG_MODE_*
+      macros in lr11xx_bindings_def.h when setting this property.
+
+  rf-sw-enable:
+    type: int
+    required: false
+    description: |
+      Configuration for enabling rf switches RFSW0 through RFSW4 (DIO5 - DIO8).
+
+      Select RFSW/DIO pins that will be used in any of the lr11xx modes.
+      If a RFSW/DIO pin is not selected it can not be used in any of the lr11xx
+      modes and will be left in High-Z state.
+
+      Valid values are: LR11XX_DIO5 - 8, representing DIO5 - DIO8 pins.
+      Setting multiple pins is done with logical OR operator,
+      i.e. LR11XX_DIO5 | LR11XX_DIO6.
+      If none of the RFSW/DIO pins need to be enabled then do not
+      set rf-sw-enable in DTS.
+      For usage of the LR11XX_DIO5 - 8 macros, file lr11xx_bindings_def.h needs
+      to be includes in the DTS file!
+
+  rf-sw-standby-mode:
+    type: int
+    required: false
+    description: |
+      Configuration for selecting RFSW0 through RFSW4 (DIO5 - DIO8) pin states
+      for lr1xx standby mode.
+
+      If a RFSW/DIO pin is selected and enabled (set in rf-sw-enable), the pin
+      is set high in this mode.
+      If a RFSW/DIO pin is not selected, but it is enabled, the pin is set
+      low.
+      If a RFSW/DIO pin is not selected and not enabled it is left in HIGH-Z
+      state.
+
+  rf-sw-rx-mode:
+    type: int
+    required: false
+    description: |
+      Configuration for selecting RFSW0 through RFSW4 (DIO5 - DIO8) pin states
+      for lr11xx rx mode.
+
+      See rf-sw-standby-mode for details on the pins.
+
+  rf-sw-tx-mode:
+    type: int
+    required: false
+    description: |
+      Configuration for selecting RFSW0 through RFSW4 (DIO5 - DIO8) pin states
+      for lr11xx tx mode.
+
+      See rf-sw-standby-mode for details on the pins.
+
+  rf-sw-tx-hp-mode:
+    type: int
+    required: false
+    description: |
+      Configuration for selecting RFSW0 through RFSW4 (DIO5 - DIO8) pin states
+      for lr11xx tx hp mode.
+
+      See rf-sw-standby-mode for details on the pins.
+
+  rf-sw-tx-hf-mode:
+    type: int
+    required: false
+    description: |
+      Configuration for selecting RFSW0 through RFSW4 (DIO5 - DIO8) pin states
+      for lr11xx tx hf mode.
+
+      See rf-sw-standby-mode for details on the pins.
+
+  rf-sw-wifi-mode:
+    type: int
+    required: false
+    description: |
+      Configuration for selecting RFSW0 through RFSW4 (DIO5 - DIO8) pin states
+      for lr11xx wifi mode.
+
+      See rf-sw-standby-mode for details on the pins.
+
+  rf-sw-gnss-mode:
+    type: int
+    required: false
+    description: |
+      Configuration for selecting RFSW0 through RFSW4 (DIO5 - DIO8) pin states
+      for lr11xx gnss mode.
+
+      See rf-sw-standby-mode for details on the pins.

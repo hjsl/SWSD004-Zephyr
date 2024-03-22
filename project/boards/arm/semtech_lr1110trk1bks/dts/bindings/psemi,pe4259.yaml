@@ -1,0 +1,12 @@
+description: |
+  SPDT High Power UltraCMOS 10MHz–3.0GHz RF Switch.
+
+compatible: "psemi,pe4259"
+
+include: [base.yaml, power.yaml]
+
+properties:
+  ctrl-gpios:
+    type: phandle-array
+    required: true
+    description: Pin used to control the RF switch
