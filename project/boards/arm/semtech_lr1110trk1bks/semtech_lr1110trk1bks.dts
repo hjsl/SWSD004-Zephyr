@@ -56,6 +56,7 @@
 		die-temp0 = &die_temp;
 		volt-sensor0 = &vref;
 		volt-sensor1 = &vbat;
+		accel0 = &lis2de12;
 	};
 
 	/* Regulator controlling the hall sensor power supply. */
